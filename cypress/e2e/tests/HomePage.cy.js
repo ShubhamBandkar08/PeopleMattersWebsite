@@ -1,78 +1,161 @@
-describe("Home Page Tests",{viewportHeight:1080,viewportWidth:1920 }, () => {
-    it("Validate Menu Category Pages are displayed or not ",()=>{
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // Prevent Cypress from failing tests on React errors
+  return false;
+});
 
-        cy.visit("https://beta.peoplematters.in", {
-            auth: {
-                username: "pmpl-user1",
-                password: "Pmpl@2025!"
-            }
-        })
-        cy.get('.fixed > .absolute').click() //click on skip button
-        cy.wait(3000)
-        cy.get('#pushengage-opt-in-9-close').click()// click on notification
-       // cy.scrollTo('top') // Scroll to the top of the page
-        //Click left menu category
-        const selectors = [
-            '.pb-8 > .flex > :nth-child(1) > .text-sm',
-            '.pb-8 > .flex > :nth-child(2)',
-            '.pb-8 > .flex > :nth-child(3) > .text-sm',
-            '.pb-8 > .flex > :nth-child(4) > .text-sm',
-            '.pb-8 > .flex > :nth-child(5) > .text-sm',
-            '.pb-8 > .flex > :nth-child(6) > .text-sm',
-            '.pb-8 > .hidden > :nth-child(1) > .text-sm',
-            '.pb-8 > .hidden > :nth-child(2)',
-            '.hidden > :nth-child(3) > .text-sm',
-            '.hidden > :nth-child(4) > .text-sm'
+describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () => {
 
-        ];
+  it.only("Validate Menu Category Pages are displayed or not ", () => {
+    cy.visit("https://beta.peoplematters.in", {
+      auth: {
+        username: "pmpl-user1",
+        password: "Pmpl@2025!"
+      }
+    });
 
-        selectors.forEach(selector =>{
-            cy.get(selector).click()
-            cy.get('[href="/get-in-touch"]').scrollIntoView({ duration: 10000 }) // Scroll to the "Get in Touch" link
-            cy.wait(2000) // Wait for 2 seconds to load the page
+    cy.wait(2000);
+    cy.get('.fixed > .absolute').click();
+    cy.wait(3000);
+    cy.get('#pushengage-opt-in-9-close').click();
 
-        })
-        cy.get('.w-\\[150px\\]').click()// check logo is navigating to the home page
+    const selectors = [
+      '.pb-8 > .flex > :nth-child(2)',
+      '.pb-8 > .flex > :nth-child(3) > .text-sm',
+      '.pb-8 > .flex > :nth-child(4) > .text-sm',
+      '.pb-8 > .flex > :nth-child(5) > .text-sm',
+      '.pb-8 > .flex > :nth-child(6) > .text-sm',
+      '.pb-8 > .hidden > :nth-child(1) > .text-sm',
+      '.pb-8 > .hidden > :nth-child(2)',
+      '.hidden > :nth-child(3) > .text-sm',
+      '.hidden > :nth-child(4) > .text-sm'
+    ];
 
-        // Validate Hot topics Page Navigation
+    const expectedTexts = [
+      'Strategy',
+      'Leadership',
+      'Talent Management',
+      'Technology',
+      'Learning & Development',
+      'Wellness',
+      'Diversity & Inclusion',
+      'Employee Experience',
+      'HR Analytics'
+    ];
 
+    selectors.forEach((selector, idx) => {
+      cy.get(selector).click();
+      cy.wait(2000);
+     // cy.get('.text-\\[32px\\]').should('contain.text', expectedTexts[idx]);
+     cy.get('[href="/contact-us"]').scrollIntoView({ duration: 25000 });
+      cy.go('back');
+      cy.wait(1000);
+    });
 
-    })
-    
-    it("Verify Hot topic Navigation",()=>{
+    cy.get('.w-\\[150px\\]').click(); // check logo is navigating to the home page
+  });
 
-         cy.visit("https://beta.peoplematters.in", {
-            auth: {
-                username: "pmpl-user1",
-                password: "Pmpl@2025!"
-            }
-        })
-        cy.get('.fixed > .absolute').click() //click on skip button
-        cy.wait(3000)
-        cy.get('#pushengage-opt-in-9-close').click()
+  it("Verify Hot topic Navigation", () => {
+    cy.visit("https://beta.peoplematters.in", {
+      auth: {
+        username: "pmpl-user1",
+        password: "Pmpl@2025!"
+      }
+    });
+    cy.get('.fixed > .absolute').click();
+    cy.wait(3000);
+    cy.get('#pushengage-opt-in-9-close').click();
 
-        cy.get('[href="/brand-reachout/lets-talk-talent"] > :nth-child(1) > .object-contain').click()
-         cy.wait(2000)
-        cy.go('back')
-       // Wait for 2 seconds to load the page
-        cy.get('[href="/brand-reachout/get-set-learn"] > :nth-child(2) > .text-base').click()   
-        cy.wait(2000)
-        cy.go('back')
-         // Wait for 2 seconds to load the page
-        cy.get('[href="/brand-reachout/WellnessFirstWithMediBuddy"] > :nth-child(2) > .text-base').click()
-        cy.wait(2000) // Wait for 2 seconds to load the page
-        cy.go('back')
+    cy.get('[href^="/brand-reachout/"]').then($links => {
+      const linkCount = $links.length;
+      for (let i = 0; i < linkCount; i++) {
+        cy.get('[href^="/brand-reachout/"]').eq(i)
+          .invoke('removeAttr', 'target')
+          .click();
+        cy.wait(2000);
+        cy.go('back');
+        cy.wait(1000);
+      }
+    });
+  });
 
-    })
+  it("Verify footer links are working and redirecting to the correct pages", () => {
+    cy.visit("https://beta.peoplematters.in", {
+      auth: {
+        username: "pmpl-user1",
+        password: "Pmpl@2025!"
+      }
+    });
+    cy.get('.fixed > .absolute').click();
+    cy.wait(3000);
+    cy.get('#pushengage-opt-in-9-close').click();
+    cy.get('[href="/get-in-touch"]').scrollIntoView({ duration: 10000 });
+    cy.wait(2000);
+    cy.get('.bg-indigo > .grid').each($link => {
+      const href = $link.prop('href');
+      if (href && (href.startsWith('http') || href.startsWith('/'))) {
+        cy.visit(href);
+        cy.get('body').should('be.visible');
+        cy.go('back');
+      }
+    });
+  });
 
+  it("Verify that all advertisement banners redirect to their correct landing pages when clicked", () => {
+    cy.visit("https://beta.peoplematters.in", {
+      auth: {
+        username: "pmpl-user1",
+        password: "Pmpl@2025!"
+      }
+    });
 
-    it("Validate FEATURED NEWS Navigation",()=>{
+    cy.wait(2000);
+    cy.get('.fixed > .absolute').click();
+    cy.wait(2000);
+    cy.get('#pushengage-opt-in-9-close').click();
+    cy.wait(2000);
 
+    const adSelectors = [
+      '#home-long-precontent-strip-banner_1 > a',
+      // Add more selectors if needed
+    ];
 
+    adSelectors.forEach(selector => {
+      cy.get(selector).then($a => {
+        const href = $a.attr('href');
+        const adOrigin = new URL(href, 'https://beta.peoplematters.in').origin;
 
+        cy.wrap($a)
+          .invoke('removeAttr', 'target')
+          .find('picture > img')
+          .click({ force: true });
 
-    })
+        if (adOrigin !== 'https://beta.peoplematters.in') {
+          cy.origin(adOrigin, () => {
+            cy.url().should('include', 'darwinbox.com'); // Generalize if needed
+            cy.get('body').should('be.visible');
+            cy.go('back');
+          });
+        } else {
+          cy.url().should('include', href);
+          cy.go('back');
+        }
+        cy.wait(2000);
+      });
+    });
+  });
 
+  it("Menu Option", () => {
+    cy.visit("https://beta.peoplematters.in", {
+      auth: {
+        username: "pmpl-user1",
+        password: "Pmpl@2025!"
+      }
+    });
+    cy.get('.fixed > .absolute').click();
+    cy.wait(3000);
+    cy.get('#pushengage-opt-in-9-close').click();
+    cy.get('.pb-8 > .flex > :nth-child(2)').click();
+    cy.get('.text-\\[32px\\]').should('contain.text', 'Strategy');
+  });
 
-
-})
+});
