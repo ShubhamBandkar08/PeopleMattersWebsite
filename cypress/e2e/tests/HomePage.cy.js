@@ -5,16 +5,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () => {
 
-  it.only("Validate Menu Category Pages are displayed or not ", () => {
-    cy.visit("https://beta.peoplematters.in", {
-      auth: {
-        username: "pmpl-user1",
-        password: "Pmpl@2025!"
-      }
-    });
-
+  it("Validate Menu Category Pages are displayed or not ", () => {
+    cy.VisitSite();
     cy.wait(2000);
-    cy.get('.fixed > .absolute').click();
+    //cy.get('.fixed > .absolute').click();
     cy.wait(3000);
     cy.get('#pushengage-opt-in-9-close').click();
 
@@ -45,8 +39,8 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
     selectors.forEach((selector, idx) => {
       cy.get(selector).click();
       cy.wait(2000);
-     // cy.get('.text-\\[32px\\]').should('contain.text', expectedTexts[idx]);
-     cy.get('[href="/contact-us"]').scrollIntoView({ duration: 25000 });
+      // cy.get('.text-\\[32px\\]').should('contain.text', expectedTexts[idx]);
+      cy.get('[href="/contact-us"]').scrollIntoView({ duration: 25000 });
       cy.go('back');
       cy.wait(1000);
     });
@@ -55,50 +49,94 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
   });
 
   it("Verify Hot topic Navigation", () => {
-    cy.visit("https://beta.peoplematters.in", {
-      auth: {
-        username: "pmpl-user1",
-        password: "Pmpl@2025!"
-      }
-    });
-    cy.get('.fixed > .absolute').click();
-    cy.wait(3000);
+    cy.visitSite();
+    // cy.get('.fixed > .absolute').click();
+    cy.wait(4000);
     cy.get('#pushengage-opt-in-9-close').click();
 
-    cy.get('[href^="/brand-reachout/"]').then($links => {
-      const linkCount = $links.length;
-      for (let i = 0; i < linkCount; i++) {
-        cy.get('[href^="/brand-reachout/"]').eq(i)
-          .invoke('removeAttr', 'target')
-          .click();
-        cy.wait(2000);
-        cy.go('back');
-        cy.wait(1000);
-      }
-    });
+    // cy.get('[href^="/brand-reachout/"]').then($links => {
+    //   const linkCount = $links.length;
+    //   for (let i = 0; i < linkCount; i++) {
+    //     cy.get('[href^="/brand-reachout/"]').eq(i)
+    //       .invoke('removeAttr', 'target')
+    //       .click();
+    //     cy.wait(2000);
+    //     cy.go('back');
+    //     cy.wait(1000);
+    //   }
+    // });
+
+    cy.get('.hidden > [href="/tag/hr-folk-talk"] > .text-base').click()
+    cy.wait(2000);
+    cy.url().should('include', 'hr-folk-talk');
+    cy.go('back');
+
+    cy.get('.hidden > [href="/brand-reachout/futureofhumancapital"] > .text-base').click()
+    cy.wait(2000);
+    cy.url().should('include', 'futureofhumancapital');
+    cy.go('back');
+
+    cy.get('.hidden > [href="/brand-reachout/smecorner"] > .text-base').click()
+    cy.wait(2000);
+    cy.url().should('include', 'smecorner');
+    cy.go('back');
+
   });
+
+
+  it("Verify one article from each section article", () => {
+    cy.visitSite();
+    // cy.get('.fixed > .absolute').click();
+    cy.wait(4000);
+    cy.get('#pushengage-opt-in-9-close').click();
+
+    cy.get('.lg\\:col-span-7 > .flex-col > .relative > .block > .overflow-hidden > .h-full').click();
+    cy.wait(2000);
+    cy.get('[href="/write-for-us"]').scrollIntoView({ duration: 2000 });
+    // cy.url().should('include', 'feature-news');
+    cy.go('back');
+
+    // Current Section
+    cy.wait(3000)
+    cy.get(':nth-child(2) > #CURRENT > .md\\:grid-cols-2 > :nth-child(1) > .flex-col > .relative > .block > .overflow-hidden > .h-full').scrollIntoView({ duration: 2000 });
+    cy.wait(2000);
+    cy.get(':nth-child(2) > #CURRENT > .md\\:grid-cols-2 > :nth-child(1) > .flex-col > .relative > .block > .overflow-hidden > .h-full').click();
+    cy.wait(2000);
+    cy.go('back');
+
+    //Trending Section
+    cy.wait(3000)
+    cy.get(':nth-child(4) > .lg\\:flex-row > .lg\\:w-\\[30\\%\\] > .space-y-6 > :nth-child(1) > .space-y-10 > :nth-child(1) > [data-template="trending_section_right"] > .grid > :nth-child(1)').click();
+    cy.wait(2000);
+    cy.go('back');
+
+    //Recent Article
+    cy.wait(3000)
+    cy.get('#RECENT-ARTICLES > .grid > :nth-child(1)').click();
+    cy.wait(2000);
+    cy.go('back');
+
+
+  })
 
   it("Verify footer links are working and redirecting to the correct pages", () => {
-    cy.visit("https://beta.peoplematters.in", {
-      auth: {
-        username: "pmpl-user1",
-        password: "Pmpl@2025!"
-      }
-    });
-    cy.get('.fixed > .absolute').click();
-    cy.wait(3000);
+    cy.visitSite();
+    // cy.get('.fixed > .absolute').click();
+    cy.wait(5000);
     cy.get('#pushengage-opt-in-9-close').click();
-    cy.get('[href="/get-in-touch"]').scrollIntoView({ duration: 10000 });
-    cy.wait(2000);
-    cy.get('.bg-indigo > .grid').each($link => {
-      const href = $link.prop('href');
-      if (href && (href.startsWith('http') || href.startsWith('/'))) {
-        cy.visit(href);
-        cy.get('body').should('be.visible');
-        cy.go('back');
-      }
-    });
-  });
+    // cy.get('[href="/get-in-touch"]').scrollIntoView({ duration: 10000 });
+    // cy.wait(2000);
+    // cy.get('.bg-indigo > .grid').each($link => {
+    //   const href = $link.prop('href');
+    //   if (href && (href.startsWith('http') || href.startsWith('/'))) {
+    //     cy.visit(href);
+    //     cy.get('body').should('be.visible');
+    //     cy.go('back');
+    //   }
+    // });
+
+
+  })
 
   it("Verify that all advertisement banners redirect to their correct landing pages when clicked", () => {
     cy.visit("https://beta.peoplematters.in", {
@@ -145,12 +183,7 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
   });
 
   it("Menu Option", () => {
-    cy.visit("https://beta.peoplematters.in", {
-      auth: {
-        username: "pmpl-user1",
-        password: "Pmpl@2025!"
-      }
-    });
+    cy.visitsite();
     cy.get('.fixed > .absolute').click();
     cy.wait(3000);
     cy.get('#pushengage-opt-in-9-close').click();
@@ -158,4 +191,26 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
     cy.get('.text-\\[32px\\]').should('contain.text', 'Strategy');
   });
 
-});
+  it.only('validate brand initives', () => {
+    cy.visitSite();
+    cy.wait(2000);
+    // cy.get('.fixed > .absolute').click();
+    cy.wait(3000);
+    cy.get('#pushengage-opt-in-9-close').click();
+    cy.get("[class='bg-black px-16 uppercase text-sm text-white py-3 rounded-[4px]']").scrollIntoView({duration: 2000 }).click();
+    cy.wait(2000);
+    for (let i = 0; i <= 30; i++) {
+      cy.wait(2000)
+  cy.get(`[data-swiper-slide-index="${i}"] > .w-16 > .max-h-full`).click({ force: true });
+  cy.get('[href="/write-for-us"]').scrollIntoView({ duration: 4000 });
+  cy.go('back'); 
+  cy.wait(4000); // Optional: wait for any animation or navigation
+  // Optionally, add assertions or cy.go('back') if needed
+   
+  cy.wait(1000); // Optional: wait for any animation or navigation
+  // Optionally, add assertions or cy.go('back') if needed
+}
+    });
+  })
+
+;

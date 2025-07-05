@@ -23,11 +23,11 @@ describe('Login Functionality', { viewportHeight: 1080, viewportWidth: 1920 }, (
     })
 
     it.only('Should successfully log in with valid credentials',() => {   
-        cy.visit('https://beta.peoplematters.in')
+        cy.visitsite()
         cy.wait(2000)
-        cy.get('.fixed > .absolute').click()
-        cy.wait(1000)
-        cy.get('#pushengage-opt-in-9-close').click()
+       // cy.get('.fixed > .absolute').click()
+        cy.wait(3000)
+     //   cy.get('#pushengage-opt-in-9-close').click()
         cy.get('.lg\\:flex > :nth-child(2) > .text-sm').click()
         cy.url().should('include', 'login')// Verify that the URL includes 'login'
         cy.wait(2000)
