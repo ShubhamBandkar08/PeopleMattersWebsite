@@ -1,12 +1,6 @@
 import { podcast } from "../../Pages/Podcast";
 const podcastObj = new podcast();
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // Prevent Cypress from failing tests on React errors
-    return false;
-});
-
-
 describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, () => {
 
     it('TC_01 : Validate Podcast Page Loads Successfully', () => {
@@ -66,7 +60,7 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
 
     })
 
-    it.only('TC_05 - Validate Duration is visible on All Cards for All Season ', () => {
+    it('TC_05 - Validate Duration is visible on All Cards for All Season ', () => {
         cy.visitSite()
         cy.wait(5000);
         cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu

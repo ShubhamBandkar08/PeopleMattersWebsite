@@ -83,7 +83,6 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
 
   });
 
-
   it("Verify one article from each section article", () => {
     cy.visitSite();
     // cy.get('.fixed > .absolute').click();
@@ -191,26 +190,26 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
     cy.get('.text-\\[32px\\]').should('contain.text', 'Strategy');
   });
 
-  it.only('validate brand initives', () => {
-    cy.visitSite();
-    cy.wait(2000);
-    // cy.get('.fixed > .absolute').click();
-    cy.wait(3000);
-    cy.get('#pushengage-opt-in-9-close').click();
-    cy.get("[class='bg-black px-16 uppercase text-sm text-white py-3 rounded-[4px]']").scrollIntoView({duration: 2000 }).click();
-    cy.wait(2000);
-    for (let i = 0; i <= 30; i++) {
-      cy.wait(2000)
-  cy.get(`[data-swiper-slide-index="${i}"] > .w-16 > .max-h-full`).click({ force: true });
-  cy.get('[href="/write-for-us"]').scrollIntoView({ duration: 4000 });
-  cy.go('back'); 
-  cy.wait(4000); // Optional: wait for any animation or navigation
-  // Optionally, add assertions or cy.go('back') if needed
+//   it.only('validate brand initives', () => {
+//     cy.visitSite();
+//     cy.wait(2000);
+//     // cy.get('.fixed > .absolute').click();
+//     cy.wait(3000);
+//     cy.get('#pushengage-opt-in-9-close').click();
+//     cy.get("[class='bg-black px-16 uppercase text-sm text-white py-3 rounded-[4px]']").scrollIntoView({duration: 2000 }).click();
+//     cy.wait(2000);
+//     for (let i = 0; i <= 30; i++) {
+//       cy.wait(2000)
+//   cy.get(`[data-swiper-slide-index="${i}"] > .w-16 > .max-h-full`).click({ force: true });
+//   cy.get('[href="/write-for-us"]').scrollIntoView({ duration: 4000 });
+//   cy.go('back'); 
+//   cy.wait(4000); // Optional: wait for any animation or navigation
+//   // Optionally, add assertions or cy.go('back') if needed
    
-  cy.wait(1000); // Optional: wait for any animation or navigation
-  // Optionally, add assertions or cy.go('back') if needed
-}
-    });
+//   cy.wait(1000); // Optional: wait for any animation or navigation
+//   // Optionally, add assertions or cy.go('back') if needed
+// }
+//     });
   })
 
 ;
