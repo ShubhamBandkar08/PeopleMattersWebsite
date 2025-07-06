@@ -6,6 +6,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 
 describe('Event Page Tests', { viewportHeight: 1080, viewportWidth: 1920 }, () => {
+    
     it('Validate Saved Event is displayed in "My account Event page"', () => {
 
         cy.visitSite();
@@ -34,6 +35,7 @@ describe('Event Page Tests', { viewportHeight: 1080, viewportWidth: 1920 }, () =
 
 
     })
+    
     it.only('Should redirect to login when saving event, then return to event page after login', () => {
 
 

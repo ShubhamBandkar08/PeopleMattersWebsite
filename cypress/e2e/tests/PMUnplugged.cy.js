@@ -50,19 +50,23 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
         cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu
         cy.wait(5000);
         cy.url().should('include', 'podcast') // Verify that the URL includes '
-        cy.wait(5000);
+        cy.wait(3000);
         cy.get('#pushengage-opt-in-9-close').click()
-        cy.get("[class='border border-inactiveGray rounded-lg py-[23px] px-3 flex flex-col h-full transition-shadow hover:shadow-lg']")
-            .first().within(() => {
-                cy.get('img').should('be.visible')
-                cy.contains('EP').should('exist');
-                cy.contains('GO TO EPISODE').should('exist')
-            })
-
+        podcastObj.ValidateEpisodeCardStructure(); // Validate Episode cards structure
+        cy.wait(5000);
+        // Click on Season 2
+         cy.get('[href="/podcast/kaleidoscope-of-cultures"] > div > .text-gray-700').click()
+        cy.wait(2000);
+        podcastObj.ValidateEpisodeCardStructure();
+        cy.wait(2000);
+        // Click on Season 1
+        cy.get('[href="/podcast/the-art-of-the-possible"] > div > .text-gray-700').click()
+        cy.wait(2000);
+        podcastObj.ValidateEpisodeCardStructure();
 
     })
 
-    it('TC_05 - Validate Duration Format on All Cards for All Season ', () => {
+    it.only('TC_05 - Validate Duration is visible on All Cards for All Season ', () => {
         cy.visitSite()
         cy.wait(5000);
         cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu
@@ -109,5 +113,33 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
         podcastObj.ClickOnGoToEpisodeLink();
     })
 
+    it('TC_07 - Validate All Images Have Alt Text for All Season', () => {
+        cy.visitSite()
+        cy.wait(5000);
+        cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu
+        cy.wait(5000);
+        cy.url().should('include', 'podcast') // Verify that the URL includes '
+        cy.wait(5000);
+        cy.get('#pushengage-opt-in-9-close').click()
+        //Season 3
+        cy.wait(3000)
+        podcastObj.CheckAltTextForPodcastImages();
+        cy.wait(3000)
 
+        //Season 2
+        cy.get('[href="/podcast/kaleidoscope-of-cultures"] > div > .text-gray-700').click()
+        cy.wait(3000)
+        podcastObj.CheckAltTextForPodcastImages();
+        cy.wait(3000)
+
+        //Season 1
+        cy.get('[href="/podcast/the-art-of-the-possible"] > div > .text-gray-700').click()
+        cy.wait(3000)
+        podcastObj.CheckAltTextForPodcastImages();
+        cy.wait(3000)
+
+    });
 })
+
+
+
