@@ -17,6 +17,7 @@
   "homepage": "https://github.com/ShubhamBandkar08/PeopleMattersWebsite#readme",
   "description": "",
   "devDependencies": {
-    "cypress": "^14.4.0"
+    "cypress": "^14.4.0",
+    "mochawesome": "^7.1.3"
   }
 }

@@ -5,10 +5,11 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
 
     it('TC_01 : Validate Podcast Page Loads Successfully', () => {
         cy.visitSite();
-        cy.wait(5000);
-        cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu
+        cy.wait(10000);
+        cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click()
+        cy.wait(10000); // Click on Podcast link from Top Menu
         cy.url().should('include', 'podcast') // Verify that the URL includes '
-        cy.wait(5000);
+        cy.wait(10000);
         cy.get('#pushengage-opt-in-9-close').click() // Close the push notification popup
 
     })
@@ -40,22 +41,22 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
 
     it.only('TC_04 : Validate Episode Cards and Structure', () => {
         cy.visitSite()
-        cy.wait(5000);
+        cy.wait(10000);
         cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu
         cy.wait(5000);
         cy.url().should('include', 'podcast') // Verify that the URL includes '
         cy.wait(3000);
         cy.get('#pushengage-opt-in-9-close').click()
-        podcastObj.ValidateEpisodeCardStructure(); // Validate Episode cards structure
+       podcastObj.ValidateEpisodeCardStructure(); // Validate Episode cards structure
         cy.wait(5000);
         // Click on Season 2
         cy.get('[href="/podcast/kaleidoscope-of-cultures"] > div > .text-gray-700').click()
-        cy.wait(2000);
+        cy.wait(8000);
         podcastObj.ValidateEpisodeCardStructure();
-        cy.wait(2000);
+        cy.wait(5000);
         // Click on Season 1
         cy.get('[href="/podcast/the-art-of-the-possible"] > div > .text-gray-700').click()
-        cy.wait(2000);
+        cy.wait(8000);
         podcastObj.ValidateEpisodeCardStructure();
 
     })
@@ -134,19 +135,6 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
 
     })
 
-    // it('TC_08 - Validate Podcast detail page',()=>{
-    //    cy.visitSite()
-    //     cy.wait(5000);
-    //     cy.get('.pb-8 > .hidden > :nth-child(2) > .text-sm').click() // Click on Podcast link from Top Menu
-    //     cy.wait(5000);
-    //     cy.url().should('include', 'podcast') // Verify that the URL includes '
-    //     cy.wait(5000);
-    //     cy.get('#pushengage-opt-in-9-close').click() 
-
-
-
-    // })
-
 
 })
 
@@ -154,7 +142,7 @@ describe('PM Unplugged Tests', { viewportHeight: 1080, viewportWidth: 1920 }, ()
 
 describe('Podcast Details page ', { viewportHeight: 1080, viewportWidth: 1920 }, () => {
     beforeEach(() => {
-        cy.visit("https://qa.peoplematters.in/podcast/from-inspiration-to-action/leading-with-culture")
+        cy.visit("https://www.peoplematters.in/podcast/from-inspiration-to-action/leading-with-culture")
     })
 
     it('TC_08 - Validate in Podcast Details page episode title is visible', () => {
@@ -198,7 +186,9 @@ describe('Podcast Details page ', { viewportHeight: 1080, viewportWidth: 1920 },
         cy.get("[class = 'overflow-hidden group items-start gap-x-3 lg:gap-x-7 flex flex-row justify-start border-b-0.5 border-border last:border-b-0 w-full lg:py-0 py-4']").should('have.length.at.least', 4);
         cy.wait(2000);
         cy.get("[class = 'overflow-hidden group items-start gap-x-3 lg:gap-x-7 flex flex-row justify-start border-b-0.5 border-border last:border-b-0 w-full lg:py-0 py-4']").each(($el) => {
+            cy.wait(2000);
             cy.wrap($el).contains('EP').should('be.visible'); // Validate episode number
+            cy.wait(2000);
             cy.wrap($el).find('img').should('be.visible');    // Validate episode image
 
         })

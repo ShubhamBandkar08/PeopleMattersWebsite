@@ -1,3 +1,5 @@
+
+
 Cypress.on('uncaught:exception', (err, runnable) => {
   // Prevent Cypress from failing tests on React errors
   return false;
@@ -190,7 +192,7 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
     cy.get('.text-\\[32px\\]').should('contain.text', 'Strategy');
   });
 
-//   it.only('validate brand initives', () => {
+//   it('validate brand initives', () => {
 //     cy.visitSite();
 //     cy.wait(2000);
 //     // cy.get('.fixed > .absolute').click();
@@ -210,6 +212,31 @@ describe("Home Page Tests", { viewportHeight: 1080, viewportWidth: 1920 }, () =>
 //   // Optionally, add assertions or cy.go('back') if needed
 // }
 //     });
-  })
+ // })
 
-;
+
+
+ it.only("Validate Topic page has any articles or not", () => {
+    cy.visit("https://www.peoplematters.in/topics")
+    cy.wait(2000);
+    let emptyTags = [];
+    cy.get("[class='inline-block px-4 py-2 bg-lightOrange text-white hover:bg-orange hover:text-white transition-colors duration-300 rounded-md m-1']").then((Tag) => {
+      const tagCount = Tag.length;
+    for (let i = 0; i < tagCount; i++) {
+      
+
+
+
+        cy.get("[class='inline-block px-4 py-2 bg-lightOrange text-white hover:bg-orange hover:text-white transition-colors duration-300 rounded-md m-1']")
+          .eq(i).invoke('text').then((tagText) => {
+       // cy.get("[class='overflow-hidden group items-start gap-x-3 lg:gap-x-7 flex flex-row justify-start border-b-0.5 border-border last:border-b-0 w-full lg:py-0 py-4']").should('be.visible')
+        cy.wait(2000);
+        cy.go('back');
+        cy.wait(2000);
+
+      })
+    }
+    
+    });
+  })
+  })
