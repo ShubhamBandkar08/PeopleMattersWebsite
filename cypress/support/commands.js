@@ -26,5 +26,5 @@
 
 
 Cypress.Commands.add('visitSite', () => {
-  cy.visit('https://beta.peoplematters.in/');  
-});
+  cy.visit('https://www.peoplematters.in/');  
+}); 

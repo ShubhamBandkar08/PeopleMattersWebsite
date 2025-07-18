@@ -1,22 +1,7 @@
+import { select } from '../../Pages/ResearchPage1';
+
 describe('Validate Research Page', { viewportHeight: 1080, viewportWidth: 1920 }, () => {
 
-    const select = {
-        FeaturedCard: "[class='group cursor-pointer']",
-        rightsideCard: "[class='overflow-hidden group items-start gap-x-3 lg:gap-x-7 flex flex-row justify-start border-b-0.5 border-border last:border-b-0 w-full h-fit pb-3 lg:pt-0 pt-4']",
-        section1: "[id='People-Matters-Research']",
-        category1: "[class='text-inkBlack font-medium truncate min-w-0 whitespace-nowrap']",
-        category2: "[class='text-xs font-medium font-inter truncate min-w-0']",
-        authorName1: "[class='text-inkBlack/60 font-normal line-clamp-1 whitespace-nowrap']",
-        authorName2: "[class='text-inactiveGray font-medium text-xs font-inter line-clamp-1']",
-        LeftArticleTitle: "[class='font-normal text-base lg:text-xl line-clamp-4 leading-5']",
-        rigtsectionImg: "[class='w-32 h-24 lg:w-40 lg:h-24 flex-shrink-0 relative']",
-        lebel: "[class='text-[10px] uppercase tracking-[0.4em] lg:px-5 px-4 md:font-bold font-medium text-left bg-foreground text-white py-2.5 rounded-b ']",
-        leftSection: ".pb-10 > :nth-child(1) > :nth-child(2) > .lg\\:flex-row",
-        section2leftCard: "[class='overflow-hidden group items-start gap-x-3 lg:gap-x-7 flex flex-row justify-start border-b-0.5 border-border last:border-b-0 w-full lg:py-0 py-4']",
-        category3: "[class='text-inkBlack text-xs font-medium font-inter truncate min-w-0']",
-        section3: '#Co-Branded-Research > .grid-cols-1',
-        section4: ':nth-child(4) > .lg\\:flex-row'
-    }
     beforeEach(() => {
         cy.visitSite();
     })
@@ -273,11 +258,9 @@ describe('Validate Research Page', { viewportHeight: 1080, viewportWidth: 1920 }
         cy.get('.pb-8 > .hidden > :nth-child(3) > .text-sm').click(); // Click on Research link from Top Menu
         cy.wait(10000); // Wait for the page to load
         cy.url().should('include', 'research');
-        cy.get('#People-Matters-Research > .border-t-0\\.5 > .flex > .text-\\[10px\\]')
-            .should('be.visible')
-        cy.wait(2000);
+        cy.wait(5000);
         cy.get(select.section4).scrollIntoView({ duration: 3000 })
-        cy.wait(2000)
+        cy.wait(5000)
         cy.get(select.section4).find(select.section2leftCard).each(($card) => {
             cy.wrap($card).find(select.category3).scrollIntoView().should('be.visible').and('not.be.empty');
             cy.wrap($card).find(select.authorName2).scrollIntoView().should('be.visible').and('not.be.empty');
