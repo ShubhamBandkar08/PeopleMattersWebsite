@@ -286,7 +286,7 @@ describe('Validate Research Page', { viewportHeight: 1080, viewportWidth: 1920 }
 
     })
 
-    it("TC_14: Validate in POPULAR PEOPLE MATTERS RESEARCH RESOURCES section all articles are naviagte correctly", () => {
+    it("TC_14: Validate in Popular Co-Branded Research section all articles are naviagte correctly", () => {
         //cy.visit('https://www.peoplematters.in/');
         cy.wait(3000);
         cy.get('.pb-8 > .hidden > :nth-child(3) > .text-sm').click(); // Click on Research link from Top Menu
